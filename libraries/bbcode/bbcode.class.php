@@ -195,10 +195,10 @@ if (!class_exists("bbcode")) {
 		}
 
 		function sanatizeURLs($arrURL){
-			$text = str_replace(array('"', "'"), array("",""), $arrURL[1]);
-			if (!filter_var($text, FILTER_VALIDATE_URL)) return '';
+			$url   = str_replace(['"', "'"], '', trim($arrURL[1]));
+			if (!preg_match('~^https?://~i', $url)) return '';
 
-			return '<a href="'.filter_var($text, FILTER_SANITIZE_URL).'" rel="nofollow">'.$arrURL[2].'</a>';
+			return '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" rel="nofollow">' . htmlspecialchars($arrURL[2], ENT_QUOTES, 'UTF-8'). '</a>';
 		}
 
 		// Download the Image to eqdkp
